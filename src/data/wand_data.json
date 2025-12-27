@@ -1,0 +1,80 @@
+{
+  "questions": [
+    {
+      "id": "height",
+      "text": "How tall are you?",
+      "type": "select",
+      "options": ["Short", "Average", "Tall"]
+    },
+    {
+      "id": "eyes",
+      "text": "What is your eye colour?",
+      "type": "select",
+      "options": ["Dark brown/Black", "Brown", "Hazel", "Blue", "Blue/Grey", "Blue/Green", "Green", "Grey", "Other"]
+    },
+    {
+      "id": "birth_day",
+      "text": "What day were you born?",
+      "type": "date_day_only",
+      "note": "We only need to know if the day is Even or Odd"
+    },
+    {
+      "id": "pride",
+      "text": "What are you most proud of?",
+      "type": "select",
+      "options": ["Determination", "Imagination", "Resilience", "Intelligence", "Originality", "Optimism", "Kindness"]
+    },
+    {
+      "id": "path",
+      "text": "Traveling alone down a deserted road, you reach a junction. Which path do you continue?",
+      "type": "card_select",
+      "options": ["Sea", "Forest", "Castle"]
+    },
+    {
+      "id": "fear",
+      "text": "What do you fear most?",
+      "type": "select",
+      "options": ["Darkness", "Fire", "Heights", "Small Spaces", "Isolation"]
+    },
+    {
+      "id": "artefact",
+      "text": "From a chest of magical artefacts, which would you choose?",
+      "type": "visual_select",
+      "options": ["Dusty Bottle", "Old Black Glove", "Golden Key", "Bound-up Scroll", "Glittering Jewel", "Silver Dagger", "Ornate Mirror"]
+    }
+  ],
+  "logic": {
+    "cores": [
+      { "fear": "Darkness", "artefact": "Dusty Bottle", "result": "Dragon" },
+      { "fear": "Fire", "artefact": "Dusty Bottle", "result": "Unicorn" },
+      { "fear": "Isolation", "artefact": "Silver Dagger", "result": "Phoenix" },
+      { "fear": "Heights", "artefact": "Golden Key", "result": "Unicorn" },
+      { "fear": "Small Spaces", "artefact": "Bound-up Scroll", "result": "Phoenix" },
+      { "default": "Unicorn" }
+    ],
+    "lengths": {
+      "Dusty Bottle": { "Short": "10 1/2", "Average": "11 1/4", "Tall": "13 1/2" },
+      "Old Black Glove": { "Short": "9 1/2", "Average": "12", "Tall": "14" },
+      "Golden Key": { "Short": "11", "Average": "12 1/4", "Tall": "13 3/4" },
+      "Bound-up Scroll": { "Short": "10", "Average": "10 3/4", "Tall": "14 1/2" },
+      "Glittering Jewel": { "Short": "9 3/4", "Average": "11 3/4", "Tall": "13 1/4" },
+      "Silver Dagger": { "Short": "12 3/4", "Average": "12 1/2", "Tall": "13" },
+      "Ornate Mirror": { "Short": "10 1/4", "Average": "11 1/2", "Tall": "14 1/4" }
+    },
+    "flexibilities": {
+      "Determination": { "Even": "Unbending", "Odd": "Reasonably Supple" },
+      "Imagination": { "Even": "Surprisingly Swishy", "Odd": "Slightly Springy" },
+      "Resilience": { "Even": "Rigid", "Odd": "Supple" },
+      "Intelligence": { "Even": "Unyielding", "Odd": "Hard" },
+      "Originality": { "Even": "Quite Bendy", "Odd": "Brittle" },
+      "Optimism": { "Even": "Solid", "Odd": "Pliant" },
+      "Kindness": { "Even": "Slightly Yielding", "Odd": "Quite Flexible" }
+    },
+    "woods_mapping_example": [
+      { "eyes": "Blue", "trait": "Intelligence", "path": "Sea", "wood": "Pear" },
+      { "eyes": "Green", "trait": "Resilience", "path": "Forest", "wood": "Elm" },
+      { "eyes": "Brown", "trait": "Determination", "path": "Castle", "wood": "Sycamore" },
+      { "eyes": "Hazel", "trait": "Imagination", "path": "Sea", "wood": "Silver Lime" }
+    ]
+  }
+}

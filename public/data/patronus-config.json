@@ -1,0 +1,65 @@
+{
+  "stages": [
+    {
+      "step": 1,
+      "type": "standard",
+      "groups": [
+        ["Glow", "Blade", "Wind", "Serve", "Dance"],
+        ["Shine", "Thorn", "Rain", "Seek", "Discover"],
+        ["Glitter", "Leaf", "Sun", "Protect", "Dream"]
+      ]
+    },
+    {
+      "step": 2,
+      "type": "standard",
+      "groups": [
+        ["Make", "Bright", "Sweet", "Warm", "Bone", "Smooth"],
+        ["Improve", "Shadow", "Salt", "Cold", "Blood", "Rough"]
+      ]
+    },
+    {
+      "step": 3,
+      "type": "standard",
+      "groups": [
+        ["Escape", "Preen", "Sense", "Earth", "Around"],
+        ["Lead", "Prowl", "Think", "Stone", "Under"],
+        ["Save", "Play", "Feel", "Wood", "Over"]
+      ]
+    },
+    {
+      "step": 4,
+      "type": "standard",
+      "groups": [
+        ["Forever", "Who", "Safe", "Together", "Found", "Speak"],
+        ["Sometimes", "Why", "Free", "Alone", "Lost", "Silent"]
+      ]
+    },
+    {
+      "step": 5,
+      "type": "standard",
+      "groups": [
+        ["Hope", "Black", "Mind", "Advise", "Listen"],
+        ["Trust", "Grey", "Spirit", "Impress", "Touch"],
+        ["Love", "White", "Heart", "Comfort", "Watch"]
+      ]
+    },
+    {
+      "step": 6,
+      "type": "branching",
+      "trigger": "is_unusual_or_rare",
+      "groups": [
+        ["Sharp", "Deep", "Awake", "Frost", "Ripple", "Hunt"],
+        ["Sleek", "High", "Asleep", "Dew", "Wave", "Create"]
+      ]
+    },
+    {
+      "step": 7,
+      "type": "branching",
+      "trigger": "is_very_rare",
+      "groups": [
+        ["Legend", "Glory", "Impossible", "Bewitch", "Jinx"],
+        ["Myth", "Serenity", "Eternal", "Enchant", "Charm"]
+      ]
+    }
+  ]
+}

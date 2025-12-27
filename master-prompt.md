@@ -1,55 +1,56 @@
-# ROLE
+## PROJECT IDENTITY
 
-Sei un Senior Frontend Engineer esperto in Data Visualization e logiche di gioco.
-Stiamo implementando il "Modulo Patronus" per la nostra app Pottermore Custom.
+Stiamo costruendo "Wizarding World Custom", una Web App moderna che ricrea le versioni "Extended" dei tre grandi quiz di Pottermore (Smistamento, Bacchetta, Patronus) in un'unica interfaccia fluida e localizzata in Italiano.
 
-# CONTEXT & GOAL
+## TECH STACK
 
-Creare un'esperienza immersiva e misteriosa dove l'utente seleziona parole istintive per scoprire il proprio Patronus.
-L'algoritmo si basa su un sistema di "Filtraggio Progressivo" utilizzando dataset CSV reali.
+- **Framework**: Next.js 14+ (App Router)
+- **Language**: TypeScript (Strict mode)
+- **Styling**: Tailwind CSS (per il layout) + Custom CSS (per effetti magici specifici)
+- **Animations**: Framer Motion (OBBLIGATORIO per transizioni fluide tra le domande. Niente scatti.)
+- **State Management**: Zustand (Store globale per salvare i risultati delle 3 cerimonie)
+- **Data Parsing**: `papaparse` (per leggere i CSV del Patronus)
 
-# DATA SOURCES (Files in `/data`)
+## FOLDER STRUCTURE (SIMPLIFIED & FLAT)
 
-1. `patronus_master.csv`: Il database principale. Colonne: [Patronus, First Question Set, Second..., Fifth...].
-2. `patronus_unusual.csv`: Mapping per lo Step 6 (se sbloccato).
-3. `patronus_rare.csv`: Mapping per lo Step 7 (se sbloccato).
-4. `it_patronus.json`: File chiave-valore per le traduzioni (Inglese -> Italiano).
+Adottiamo una struttura piatta per facilitare lo sviluppo. Non creare sottocartelle inutili nei componenti.
 
-# LOGIC REQUIREMENTS (The Engine)
+/src
+/app -> Le pagine: page.tsx (Home), sorting/page.tsx, wand/page.tsx, patronus/page.tsx
+/components -> Metti QUI tutti i componenti UI. - Esempi: `SortingQuiz.tsx`, `WandQuiz.tsx`, `PatronusQuiz.tsx`, `Card.tsx`, `ProgressBar.tsx`
+/data -> Contiene i file JSON statici (`sorting_data.json`, `wand_data.json`)
+/utils -> Funzioni pure. - `gameLogic.ts`: Calcolatori di punteggio. - `csvLoader.ts`: Caricamento dati Patronus.
 
-1. **State Management**:
+## CORE RULES
 
-   - Mantenere un array `candidates` che all'inizio contiene TUTTE le righe del `patronus_master.csv`.
-   - Mantenere traccia del `currentStep` (da 1 a 7).
+1. **Language Strategy (English Logic / Italian UI)**:
 
-2. **The Loop (Step 1-5)**:
+   - I dati originali (JSON/CSV) sono in INGLESE e tali devono restare nella logica interna (ID, chiavi).
+   - L'interfaccia utente deve essere rigorosamente in ITALIANO.
+   - Usa i file di traduzione o mapping al volo. NON tradurre gli ID nel database.
 
-   - Ad ogni step, mostra le parole opzionabili (tratte dalle colonne del CSV corrispondente allo step corrente).
-   - _Visualizzazione_: Usa `it_patronus.json` per mostrare la parola in ITALIANO all'utente, ma usa la chiave INGLESE per la logica.
-   - _Azione Utente_: Quando l'utente clicca una parola (es. "Sun"):
-     - Filtra l'array `candidates`: mantieni solo i Patronus che hanno "Sun" nella colonna relativa a quello step.
-     - Esempio: Se siamo allo Step 1, controlla la colonna "First Question Set".
+2. **Quiz Logic Types**:
 
-3. **The Branching Logic (Critical)**:
+   - **Sorting Hat**: Logica ad "Accumulatore" (+5 punti a Grifondoro). Rispondi a tutte le 28 domande.
+   - **Wand**: Logica a "Matrice di Decisione" (Occhi + Tratto = Legno).
+   - **Patronus**: Logica a "Filtro Progressivo" su CSV (Branching paths).
 
-   - Al termine dello Step 5, controlla i `candidates` rimasti.
-   - **Caso A (Unusual):** Se tra i candidati c'è un animale presente nel file `patronus_unusual.csv`, NON mostrare il risultato. Procedi allo Step 6.
-   - **Caso B (Very Rare):** Se i candidati sono nel file `patronus_rare.csv`, procedi fino allo Step 7.
-   - **Caso C (Common):** Se nessuno dei candidati è in quelle liste, ferma il quiz e mostra il risultato (se sono rimasti più candidati, scegline uno a caso tra quelli validi).
+3. **Immersive UX**:
+   - L'app deve sembrare "magica". Usa background scuri, particelle, font serif eleganti.
+   - Nessun reload di pagina durante il quiz.
 
-4. **Parsing CSV**:
-   - Usa una libreria come `papaparse` o una funzione custom per leggere i CSV all'avvio.
-   - Nota: Le celle dei CSV contengono più valori separati da `/` (es. "Glow/Blade/Wind"). Il filtro deve controllare se la parola scelta è _inclusa_ in quella stringa.
+## DATA SOURCES LOCATIONS
 
-# UI/UX SPECIFICATIONS
+- I JSON (`sorting_data.json`, `wand_data.json`, `it_patronus.json`) si trovano in `/src/data`.
+- I CSV del Patronus si trovano in `/public/data`.
 
-- **Atmosphere**: Full screen, sfondo scuro/blu notte.
-- **Interazione**: Le parole non devono essere bottoni statici. Devono apparire in posizioni semi-casuali sullo schermo, con un effetto "fade-in" etereo (framer-motion).
-- **Hover**: Al passaggio del mouse, la parola deve illuminarsi (effetto bagliore esterno).
-- **Result**: Alla fine, mostra "Il tuo Patronus è: [Nome Animale]". (Bonus: se riesci, cerca un'immagine placeholder su Unsplash con query `[Nome Animale] animal`).
+## EXECUTION PLAN
 
-# EXECUTION STEPS
+Procediamo modulo per modulo.
 
-1. Crea la funzione di utility per caricare e parsare i 3 CSV.
-2. Crea il hook `usePatronusLogic` che gestisce il filtraggio degli array.
-3. Crea il componente UI che renderizza le parole usando il file di traduzione.
+1. **Setup**: Installa dipendenze (framer-motion, zustand, lucide-react, papaparse) e crea il Layout base.
+2. **Sorting Module**: Implementa il quiz Casa usando `sorting_data.json`.
+3. **Wand Module**: Implementa il quiz Bacchetta usando `wand_data.json`.
+4. **Patronus Module**: Implementa il quiz Patronus leggendo i CSV.
+
+Attendo istruzioni per iniziare la Fase 1 (Setup).
